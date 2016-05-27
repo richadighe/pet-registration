@@ -4,9 +4,8 @@ import java.util.*;
 
 public class PetRegistration {
 	static String name;
-
-	static String petName, petAddress, petCity, petState, petRegPrice, petDOB;
-
+	static int petCount;
+	static String[] petNames, petAddresses, petCities, petStates, petRegPrices, petDOBs;
 	static Scanner scanner;
 
 	public static void main(String args[]) {
@@ -16,34 +15,29 @@ public class PetRegistration {
 	public static void registerPet() {
 		initApplication();
 		retrieveUserName();
-		retrievePetDetails();
-		displayPetDetails();
+		retriveNumberOfPets();
+		initPetDetailArray();
+		retriveAllPetDetail();
+		displayAllPetDetails();
 		exitApplication();
-
-		char[] myLettersA;
-		myLettersA = new char[5];
-
-		char[] myLettersB = new char[5];
-
-		char[] myLettersC = { 'a', 'b', 'c', 'd', 'e' };
-
-		char[] myLettersD = new char[5];
-		myLettersD[0] = 'a';
-		myLettersD[1] = 'b';
-		myLettersD[2] = 'c';
-		myLettersD[3] = 'd';
-		myLettersD[4] = 'e';
 	}
 
-	private static void displayPetDetails() {
-		System.out.println("\nPet Details:");
-		System.out.println("---------------------------");
-		System.out.println("Name: " + petName);
-		System.out.println("Address: " + petAddress);
-		System.out.println("City: " + petCity);
-		System.out.println("State: " + petState);
-		System.out.println("Birthday: " + petDOB);
-		System.out.println("Registration Price: " + petRegPrice);
+	private static void displayAllPetDetails() {
+		for (int i = 0; i < petCount; i++) {
+			displayPetDetails(i);
+		}
+	}
+
+	private static void displayPetDetails(int petIndex) {
+		System.out.println("Pet#" + (petIndex + 1) + "Details");
+		System.out.println("---------------------------------");
+		System.out.println("Name: " + petNames[petIndex]);
+		System.out.println("Address: " + petAddresses[petIndex]);
+		System.out.println("City: " + petCities[petIndex]);
+		System.out.println("State: " + petStates[petIndex]);
+		System.out.println("Birthday: " + petDOBs[petIndex]);
+		System.out.println("Registration Price: " + petRegPrices[petIndex]);
+		System.out.println("---------------------------------");
 
 	}
 
@@ -57,22 +51,64 @@ public class PetRegistration {
 		System.out.println("Welcome to the Pet Registration Application");
 	}
 
+	private static void initPetDetailArray() {
+		// TODO Auto-generated method stub
+		petNames = new String[petCount];
+		petAddresses = new String[petCount];
+		petCities = new String[petCount];
+		petStates = new String[petCount];
+		petRegPrices = new String[petCount];
+		petDOBs = new String[petCount];
+	}
+
+	private static int obtainInt(String question) {
+		int value = 0;
+		boolean validData = false;
+		while (!validData) {
+			try {
+				System.out.print(question);
+				value = Integer.parseInt(scanner.nextLine());
+				validData = true;
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				System.out.println("you must supply a valid number");
+			}
+		}
+		return value;
+	}
+
 	private static String obtainString(String question) {
 		System.out.print(question);
 		return scanner.nextLine();
 	}
 
-	private static void retrievePetDetails() {
-		petName = obtainString("What is your pet's name:");
-		petAddress = obtainString("What is " + petName + "'s address:");
-		petCity = obtainString("What city does he live in:");
-		petState = obtainString("How about the state:");
-		petRegPrice = obtainString("How much are registration costs:");
-		petDOB = obtainString("What is " + petName + "'s birthdate (MM/DD/YYYY):");
+	private static void retrievePetDetails(int petIndex) {
+		System.out.println("Pet#" + (petIndex + 1) + "Details");
+		System.out.println("---------------------------------");
+		petNames[petIndex] = obtainString("What is your pet's name:");
+		petAddresses[petIndex] = obtainString("What is " + petNames[petIndex] + "'s address:");
+		petCities[petIndex] = obtainString("What city does he live in:");
+		petStates[petIndex] = obtainString("How about the state:");
+		petRegPrices[petIndex] = obtainString("How much are registration costs:");
+		petDOBs[petIndex] = obtainString("What is " + petNames[petIndex] + "'s birthdate (MM/DD/YYYY):");
+		System.out.println("---------------------------------");
 	}
 
 	private static void retrieveUserName() {
 		System.out.print("Could you please give me your name:");
 		name = scanner.nextLine();
+	}
+
+	private static void retriveAllPetDetail() {
+
+		for (int i = 0; i < petCount; i++) {
+			retrievePetDetails(i);
+		}
+	}
+
+	private static void retriveNumberOfPets() {
+		// TODO Auto-generated method stub
+		petCount = obtainInt("Enter the number of Pets to be registered");
+
 	}
 }
