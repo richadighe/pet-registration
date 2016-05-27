@@ -3,47 +3,44 @@ package com.sqa.rd;
 import java.util.*;
 
 public class PetRegistration {
-	static String name;
-
-	static String petName, petAddress, petCity, petState, petRegPrice, petDOB;
-
+	static String name, n;
+	static int count;
+	static String[] petNames = new String[2], petAddresss = new String[2], petCitys = new String[2],
+			petStates = new String[2], petRegPrices = new String[2], petDOBs = new String[2];
 	static Scanner scanner;
+	static int noofpets;
 
 	public static void main(String args[]) {
-		registerPet();
-	}
 
-	public static void registerPet() {
+		scanner = new Scanner(System.in);
 		initApplication();
-		retrieveUserName();
-		retrievePetDetails();
-		displayPetDetails();
-		exitApplication();
 
-		char[] myLettersA;
-		myLettersA = new char[5];
+		System.out.println("How many pets do you want to register:");
+		n = scanner.nextLine();
+		noofpets = Integer.parseInt(n);
+		count = noofpets;
+		registerPet(noofpets);
 
-		char[] myLettersB = new char[5];
-
-		char[] myLettersC = { 'a', 'b', 'c', 'd', 'e' };
-
-		char[] myLettersD = new char[5];
-		myLettersD[0] = 'a';
-		myLettersD[1] = 'b';
-		myLettersD[2] = 'c';
-		myLettersD[3] = 'd';
-		myLettersD[4] = 'e';
 	}
 
-	private static void displayPetDetails() {
-		System.out.println("\nPet Details:");
-		System.out.println("---------------------------");
-		System.out.println("Name: " + petName);
-		System.out.println("Address: " + petAddress);
-		System.out.println("City: " + petCity);
-		System.out.println("State: " + petState);
-		System.out.println("Birthday: " + petDOB);
-		System.out.println("Registration Price: " + petRegPrice);
+	public static void registerPet(int i) {
+		retrieveUserName();
+		retrievePetDetails(i);
+		displayPetDetails(i);
+		exitApplication();
+	}
+
+	private static void displayPetDetails(int no) {
+		for (int i = 0; i < no; i++) {
+			System.out.println("\nPet 1 Details:");
+			System.out.println("---------------------------");
+			System.out.println("Name: " + petNames[i]);
+			System.out.println("Address: " + petAddresss[i]);
+			System.out.println("City: " + petCitys[i]);
+			System.out.println("State: " + petStates[i]);
+			System.out.println("Birthday: " + petDOBs[i]);
+			System.out.println("Registration Price: " + petRegPrices[i]);
+		}
 
 	}
 
@@ -62,13 +59,16 @@ public class PetRegistration {
 		return scanner.nextLine();
 	}
 
-	private static void retrievePetDetails() {
-		petName = obtainString("What is your pet's name:");
-		petAddress = obtainString("What is " + petName + "'s address:");
-		petCity = obtainString("What city does he live in:");
-		petState = obtainString("How about the state:");
-		petRegPrice = obtainString("How much are registration costs:");
-		petDOB = obtainString("What is " + petName + "'s birthdate (MM/DD/YYYY):");
+	private static void retrievePetDetails(int no) {
+		for (int i = 0; i < no; i++) {
+			System.out.printf("Enter %d Pets Details", i + 1);
+			petNames[i] = obtainString("\nWhat is your pet's name:");
+			petAddresss[i] = obtainString("What is " + petNames[i] + "'s address:");
+			petCitys[i] = obtainString("What city does he live in:");
+			petStates[i] = obtainString("How about the state:");
+			petRegPrices[i] = obtainString("How much are registration costs:");
+			petDOBs[i] = obtainString("What is " + petNames[i] + "'s birthdate (MM/DD/YYYY):");
+		}
 	}
 
 	private static void retrieveUserName() {
